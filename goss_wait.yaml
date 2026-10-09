@@ -3,7 +3,7 @@
 process:
   nginx:
     running: true
-  php-fpm8.2:
+  php-fpm84:
     running: true
 port:
   tcp:80:

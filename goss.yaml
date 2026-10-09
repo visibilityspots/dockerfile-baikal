@@ -13,7 +13,7 @@ command:
   php -v:
     exit-status: 0
     stdout:
-      - /^PHP 8\.2\./
+      - /^PHP 8\.4\./
   # calendar-timezone must be readable both as a plain name, which is what
   # Home Assistant and Baikal's admin store, and as an RFC 4791 VCALENDAR
   tz-both-forms:
@@ -32,7 +32,7 @@ command:
 process:
   nginx:
     running: true
-  php-fpm8.2:
+  php-fpm84:
     running: true
 
 port:
@@ -46,3 +46,10 @@ http:
     no-follow-redirects: true
     headers:
       - "Location: http://localhost/dav.php/admin/install/"
+
+user:
+  # php-fpm must write as uid 101: the owner of existing Baikal data on the volumes
+  baikal:
+    exists: true
+    uid: 101
+    gid: 101

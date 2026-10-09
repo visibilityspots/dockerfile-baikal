@@ -12,8 +12,11 @@ which stopped at Baikal 0.10.1.
 ## How the image is built
 
 - **Baikal comes from the upstream release zip**, its checksum pinned in the
-  `Dockerfile`. `ckulka/baikal` stops at 0.10.1, so only its runtime (nginx,
-  php-fpm 8.2 and the entrypoint scripts) is reused, pinned by digest.
+  `Dockerfile`, and runs on **Alpine** with nginx and php-fpm 8.4. `ckulka/baikal`
+  stops at 0.10.1 and its Debian runtime carried ~180 HIGH/CRITICAL findings, so
+  nothing of it is used any more.
+- **php-fpm runs as uid 101** (`baikal`), the owner of data written by the
+  earlier Debian-based images, so existing volumes keep working without a chown.
 - **The Home Assistant fix is a patch** (`home-assistant-timezone.patch`), not a
   copied `Plugin.php`. The `calendar-timezone` property is read both as a plain
   name (`Europe/Paris`, what Home Assistant and Baikal's admin store) and as the
@@ -36,5 +39,4 @@ When the Baikal version changes, DAV requests redirect to `/admin/install/` unti
 the upgrade wizard has run once. Back up `Specific/db/db.sqlite` first, then open
 `/admin/install/` and start the upgrade.
 
-For volumes and environment variables, see
-[ckulka/baikal-docker](https://github.com/ckulka/baikal-docker).
+The volumes are `/var/www/baikal/config` and `/var/www/baikal/Specific`.
