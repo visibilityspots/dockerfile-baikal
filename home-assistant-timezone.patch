@@ -1,0 +1,18 @@
+--- a/vendor/sabre/dav/lib/CalDAV/Plugin.php
++++ b/vendor/sabre/dav/lib/CalDAV/Plugin.php
+@@ -508,14 +508,7 @@
+             $tzProp = '{'.self::NS_CALDAV.'}calendar-timezone';
+             $tzResult = $this->server->getProperties($path, [$tzProp]);
+             if (isset($tzResult[$tzProp])) {
+-                // This property contains a VCALENDAR with a single
+-                // VTIMEZONE.
+-                $vtimezoneObj = VObject\Reader::read($tzResult[$tzProp]);
+-                $calendarTimeZone = $vtimezoneObj->VTIMEZONE->getTimeZone();
+-
+-                // Destroy circular references so PHP will garbage collect the
+-                // object.
+-                $vtimezoneObj->destroy();
++                $calendarTimeZone = new DateTimeZone($tzResult[$tzProp]);
+             } else {
+                 // Defaulting to UTC.
+                 $calendarTimeZone = new DateTimeZone('UTC');
