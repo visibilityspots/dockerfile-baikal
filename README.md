@@ -1,4 +1,12 @@
-# dockerfile-baikal
+# Baikal
+
+[![trivy](https://github.com/visibilityspots/dockerfile-baikal/actions/workflows/trivy.yml/badge.svg)](https://github.com/visibilityspots/dockerfile-baikal/actions/workflows/trivy.yml)
+[![docker-hub-description](https://github.com/visibilityspots/dockerfile-baikal/actions/workflows/docker-hub-description.yml/badge.svg)](https://github.com/visibilityspots/dockerfile-baikal/actions/workflows/docker-hub-description.yml)
+[![build status](https://github.com/visibilityspots/dockerfile-baikal/actions/workflows/main.yml/badge.svg)](https://github.com/visibilityspots/dockerfile-baikal/actions/workflows/main.yml)
+[![gitHub release](https://img.shields.io/github/v/release/visibilityspots/dockerfile-baikal)](https://github.com/visibilityspots/dockerfile-baikal/releases)
+[![docker image size](https://img.shields.io/docker/image-size/visibilityspots/baikal/latest)](https://hub.docker.com/r/visibilityspots/baikal)
+[![docker pulls](https://img.shields.io/docker/pulls/visibilityspots/baikal.svg)](https://hub.docker.com/r/visibilityspots/baikal/)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 A ready-to-go [Baikal](https://sabre.io/baikal/) CalDAV/CardDAV server, published as
 [`visibilityspots/baikal`](https://hub.docker.com/r/visibilityspots/baikal), with a
