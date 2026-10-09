@@ -4,6 +4,10 @@ on:
   push:
     tags:
       - '*'
+# release, CHANGELOG commit: this repo's default token is read-only
+permissions:
+  contents: write
+
 jobs:
   main:
     uses: visibilityspots/github-workflows/.github/workflows/main.yml@main

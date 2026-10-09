@@ -1,0 +1,10 @@
+# dgoss runs this until it passes (up to 30s) before goss.yaml: the entrypoint
+# needs a moment to start php-fpm and nginx, and CI only sleeps 0.2s.
+process:
+  nginx:
+    running: true
+  php-fpm8.2:
+    running: true
+port:
+  tcp:80:
+    listening: true
