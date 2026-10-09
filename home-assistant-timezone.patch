@@ -1,6 +1,18 @@
 --- a/vendor/sabre/dav/lib/CalDAV/Plugin.php
 +++ b/vendor/sabre/dav/lib/CalDAV/Plugin.php
-@@ -508,14 +508,7 @@
+@@ -447,10 +447,7 @@
+                         $tzProp = '{'.self::NS_CALDAV.'}calendar-timezone';
+                         $tzResult = $this->server->getProperties($calendarPath, [$tzProp]);
+                         if (isset($tzResult[$tzProp])) {
+-                            // This property contains a VCALENDAR with a single
+-                            // VTIMEZONE.
+-                            $vtimezoneObj = VObject\Reader::read($tzResult[$tzProp]);
+-                            $timeZone = $vtimezoneObj->VTIMEZONE->getTimeZone();
++                            $timeZone = self::readCalendarTimeZone($tzResult[$tzProp]);
+                         } else {
+                             // Defaulting to UTC.
+                             $timeZone = new DateTimeZone('UTC');
+@@ -508,14 +505,7 @@
              $tzProp = '{'.self::NS_CALDAV.'}calendar-timezone';
              $tzResult = $this->server->getProperties($path, [$tzProp]);
              if (isset($tzResult[$tzProp])) {
@@ -12,7 +24,38 @@
 -                // Destroy circular references so PHP will garbage collect the
 -                // object.
 -                $vtimezoneObj->destroy();
-+                $calendarTimeZone = new DateTimeZone($tzResult[$tzProp]);
++                $calendarTimeZone = self::readCalendarTimeZone($tzResult[$tzProp]);
              } else {
                  // Defaulting to UTC.
                  $calendarTimeZone = new DateTimeZone('UTC');
+@@ -913,6 +903,30 @@
+     }
+ 
+     /**
++     * Reads the calendar-timezone property.
++     *
++     * RFC 4791 says it holds a VCALENDAR with a single VTIMEZONE, but Home
++     * Assistant and Baikal's own admin store a plain name such as
++     * "Europe/Paris", which VObject cannot parse (sabre-io/dav#1318).
++     * Both forms are accepted.
++     */
++    private static function readCalendarTimeZone(string $value): DateTimeZone
++    {
++        if (false === strpos($value, 'BEGIN:VCALENDAR')) {
++            return new DateTimeZone(trim($value));
++        }
++
++        // This property contains a VCALENDAR with a single VTIMEZONE.
++        $vtimezoneObj = VObject\Reader::read($value);
++        $timeZone = $vtimezoneObj->VTIMEZONE->getTimeZone();
++
++        // Destroy circular references so PHP will garbage collect the object.
++        $vtimezoneObj->destroy();
++
++        return $timeZone;
++    }
++
++    /**
+      * This method is triggered whenever a subsystem requests the privileges
+      * that are supported on a particular node.
+      */

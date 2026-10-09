@@ -1,35 +1,40 @@
-# baikal-docker-hass
+# dockerfile-baikal
 
-A ready-to-go [Baikal](https://sabre.io/baikal/) server that includes a
-[fix](https://github.com/sabre-io/dav/issues/1318) so Home Assistant can read its
-calendars.
+A ready-to-go [Baikal](https://sabre.io/baikal/) CalDAV/CardDAV server, published as
+[`visibilityspots/baikal`](https://hub.docker.com/r/visibilityspots/baikal), with a
+fix so Home Assistant can read its calendars
+([sabre-io/dav#1318](https://github.com/sabre-io/dav/issues/1318)).
 
-Fork of the archived
+Forked from the archived
 [MrAlucardDante/baikal-docker-hass](https://github.com/MrAlucardDante/baikal-docker-hass),
 which stopped at Baikal 0.10.1.
 
-## What changed in this fork
+## How the image is built
 
-- **Baikal is downloaded from the upstream release** (checksum pinned) instead of
-  taken from `ckulka/baikal`, whose newest version is also 0.10.1. The runtime
-  (nginx + php-fpm 8.2, entrypoint scripts) still comes from `ckulka/baikal`,
-  pinned by digest.
-- **The Home Assistant fix is a one-hunk patch**
-  (`home-assistant-timezone.patch`) instead of a whole copied `Plugin.php`. A
-  sabre/dav update can then no longer be silently reverted: when the hunk stops
-  applying, the build fails.
+- **Baikal comes from the upstream release zip**, its checksum pinned in the
+  `Dockerfile`. `ckulka/baikal` stops at 0.10.1, so only its runtime (nginx,
+  php-fpm 8.2 and the entrypoint scripts) is reused, pinned by digest.
+- **The Home Assistant fix is a patch** (`home-assistant-timezone.patch`), not a
+  copied `Plugin.php`. The `calendar-timezone` property is read both as a plain
+  name (`Europe/Paris`, what Home Assistant and Baikal's admin store) and as the
+  RFC 4791 `VCALENDAR`. When a sabre/dav update makes the patch stop applying,
+  the build fails instead of silently reverting that update.
 
-## Build
+## Releasing
 
-```bash
-./build.sh 0.12.1-1   # multi-arch, pushed to registry.visibilityspots.net
-```
+CI runs on a tag, through the shared
+[github-workflows](https://github.com/visibilityspots/github-workflows): build,
+`dgoss` test against `goss.yaml`, multi-arch push to Docker Hub
+(amd64, arm/v7, arm64), GitHub release.
+
+A new Baikal version means updating `VERSION` and `SHA256` in the `Dockerfile`
+**and** the version string in `goss.yaml`.
 
 ## Upgrading an existing install
 
-When the Baikal version changes, DAV requests redirect to
-`/admin/install/` until the upgrade wizard has run once. Back up
-`Specific/db/db.sqlite` first, then open `/admin/install/` and start the upgrade.
+When the Baikal version changes, DAV requests redirect to `/admin/install/` until
+the upgrade wizard has run once. Back up `Specific/db/db.sqlite` first, then open
+`/admin/install/` and start the upgrade.
 
-For everything else (volumes, environment variables), see
+For volumes and environment variables, see
 [ckulka/baikal-docker](https://github.com/ckulka/baikal-docker).

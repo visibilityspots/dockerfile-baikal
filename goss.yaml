@@ -1,0 +1,48 @@
+file:
+  /var/www/baikal/Core/Distrib.php:
+    exists: true
+    contents:
+      - 'define("BAIKAL_VERSION", "0.12.1");'
+  # the Home Assistant fix must have been patched in, not copied over
+  /var/www/baikal/vendor/sabre/dav/lib/CalDAV/Plugin.php:
+    exists: true
+    contents:
+      - 'private static function readCalendarTimeZone(string $value): DateTimeZone'
+
+command:
+  php -v:
+    exit-status: 0
+    stdout:
+      - /^PHP 8\.2\./
+  # calendar-timezone must be readable both as a plain name, which is what
+  # Home Assistant and Baikal's admin store, and as an RFC 4791 VCALENDAR
+  tz-both-forms:
+    exec: >-
+      php -r '
+      require "/var/www/baikal/vendor/autoload.php";
+      $read = new ReflectionMethod(Sabre\CalDAV\Plugin::class, "readCalendarTimeZone");
+      $read->setAccessible(true);
+      $vcal = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//goss//EN\r\nBEGIN:VTIMEZONE\r\nTZID:Europe/Brussels\r\nEND:VTIMEZONE\r\nEND:VCALENDAR\r\n";
+      echo $read->invoke(null, "Europe/Paris")->getName(), " ", $read->invoke(null, $vcal)->getName();
+      '
+    exit-status: 0
+    stdout:
+      - "Europe/Paris Europe/Brussels"
+
+process:
+  nginx:
+    running: true
+  php-fpm8.2:
+    running: true
+
+port:
+  tcp:80:
+    listening: true
+
+http:
+  # a fresh container has no config yet, so every page sends you to the installer
+  http://localhost/dav.php/:
+    status: 302
+    no-follow-redirects: true
+    headers:
+      - "Location: http://localhost/dav.php/admin/install/"
