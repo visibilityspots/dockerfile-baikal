@@ -1,3 +1,14 @@
+## [v0.12.1-1] - 2026-10-09
+### :boom: BREAKING CHANGES
+- due to [`1fdf24b`](https://github.com/visibilityspots/dockerfile-baikal/commit/1fdf24b88e92ab28506c1e9571d3815a4a0ab8e6) - run on Alpine with php-fpm 8.4 instead of ckulka's Debian runtime *(commit by [@visibilityspots](https://github.com/visibilityspots))*:
+
+  ckulka's environment switches (APPLY_HOME_ASSISTANT_FIX,  
+  BAIKAL_SKIP_CHOWN, msmtp) are gone; php-fpm runs as the baikal user.
+
+
+### :sparkles: New Features
+- [`1fdf24b`](https://github.com/visibilityspots/dockerfile-baikal/commit/1fdf24b88e92ab28506c1e9571d3815a4a0ab8e6) - run on Alpine with php-fpm 8.4 instead of ckulka's Debian runtime *(commit by [@visibilityspots](https://github.com/visibilityspots))*
+
 ## [v0.12.1] - 2026-10-09
 ### :boom: BREAKING CHANGES
 - due to [`ec4bb2e`](https://github.com/visibilityspots/dockerfile-baikal/commit/ec4bb2e834b5b637f46d2765a51f443b46ccb3d4) - build Baikal 0.12.1 from the upstream release *(commit by [@visibilityspots](https://github.com/visibilityspots))*:
@@ -51,3 +62,4 @@
 
 - https://github.com/sabre-io/dav/issues/1318
 [v0.12.1]: https://github.com/visibilityspots/dockerfile-baikal/compare/0.10.1...v0.12.1
+[v0.12.1-1]: https://github.com/visibilityspots/dockerfile-baikal/compare/v0.12.1...v0.12.1-1
