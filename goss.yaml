@@ -2,7 +2,7 @@ file:
   /var/www/baikal/Core/Distrib.php:
     exists: true
     contents:
-      - 'define("BAIKAL_VERSION", "0.12.1");'
+      - 'define("BAIKAL_VERSION", "0.13.0");'
   # the Home Assistant fix must have been patched in, not copied over
   /var/www/baikal/vendor/sabre/dav/lib/CalDAV/Plugin.php:
     exists: true

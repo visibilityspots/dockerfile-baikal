@@ -5,10 +5,10 @@
 # a sabre/dav update cannot be silently reverted: when the patch no longer
 # applies, the build fails. It accepts calendar-timezone both as a plain name
 # ("Europe/Paris") and as a VCALENDAR.
-FROM docker.io/library/alpine:3.22 AS builder
+FROM docker.io/library/alpine:3.24 AS builder
 
-ARG VERSION=0.12.1
-ARG SHA256=0449abb72b151d39d9c08c63cb83a05d9e9adb065b1165ef6786b0b6a13d203c
+ARG VERSION=0.13.0
+ARG SHA256=81e74df123230e863f608d228fdd7b9a1a788f60b04d37e6973c302192e83f32
 
 ADD https://github.com/sabre-io/Baikal/releases/download/${VERSION}/baikal-${VERSION}.zip /tmp/baikal.zip
 COPY home-assistant-timezone.patch /tmp/
@@ -18,9 +18,9 @@ RUN echo "${SHA256}  /tmp/baikal.zip" | sha256sum -c - && \
     patch -d /baikal -p1 --forward < /tmp/home-assistant-timezone.patch && \
     grep -q 'function readCalendarTimeZone' /baikal/vendor/sabre/dav/lib/CalDAV/Plugin.php
 
-FROM docker.io/library/alpine:3.22
+FROM docker.io/library/alpine:3.24
 
-ARG VERSION=0.12.1
+ARG VERSION=0.13.0
 LABEL org.opencontainers.image.title="baikal" \
       org.opencontainers.image.description="Baikal with the Home Assistant calendar-timezone fix" \
       org.opencontainers.image.version="${VERSION}" \
