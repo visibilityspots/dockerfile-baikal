@@ -4,6 +4,9 @@ on:
   push:
     tags:
       - '*'
+  # test only: the shared workflow skips deploy on pull requests
+  pull_request:
+    branches: [main]
 # release, CHANGELOG commit: this repo's default token is read-only
 permissions:
   contents: write
