@@ -1,3 +1,12 @@
+## [v0.13.0-1] - 2026-11-14
+### :bug: Bug Fixes
+- [`46764ee`](https://github.com/visibilityspots/dockerfile-baikal/commit/46764eeb2f93c75fc6e96295cc71c48e83ad2aac) - **image**: apk upgrade the runtime stage for Alpine security fixes *(commit by [@visibilityspots](https://github.com/visibilityspots))*
+
+### :construction_worker: Build System
+- [`3510eb8`](https://github.com/visibilityspots/dockerfile-baikal/commit/3510eb80263e337acba650e7a01e3abda66e7676) - **dependabot**: add weekly github-actions and docker updates *(PR [#1](https://github.com/visibilityspots/dockerfile-baikal/pull/1) by [@visibilityspots](https://github.com/visibilityspots))*
+- [`9f42848`](https://github.com/visibilityspots/dockerfile-baikal/commit/9f428489f6b0c0b0e83f1292d897c94761c248c5) - test pull requests *(commit by [@visibilityspots](https://github.com/visibilityspots))*
+
+
 ## [v0.12.1-1] - 2026-10-09
 ### :boom: BREAKING CHANGES
 - due to [`1fdf24b`](https://github.com/visibilityspots/dockerfile-baikal/commit/1fdf24b88e92ab28506c1e9571d3815a4a0ab8e6) - run on Alpine with php-fpm 8.4 instead of ckulka's Debian runtime *(commit by [@visibilityspots](https://github.com/visibilityspots))*:
@@ -63,3 +72,4 @@
 - https://github.com/sabre-io/dav/issues/1318
 [v0.12.1]: https://github.com/visibilityspots/dockerfile-baikal/compare/0.10.1...v0.12.1
 [v0.12.1-1]: https://github.com/visibilityspots/dockerfile-baikal/compare/v0.12.1...v0.12.1-1
+[v0.13.0-1]: https://github.com/visibilityspots/dockerfile-baikal/compare/v0.13.0...v0.13.0-1
