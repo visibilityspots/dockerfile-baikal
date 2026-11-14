@@ -26,8 +26,10 @@ LABEL org.opencontainers.image.title="baikal" \
       org.opencontainers.image.version="${VERSION}" \
       org.opencontainers.image.source="https://github.com/visibilityspots/dockerfile-baikal"
 
+# apk upgrade first: the base image lags behind the Alpine repo (php84, musl, zlib fixes).
 # sqlite is the CLI, for backups from inside the container
-RUN apk add --no-cache \
+RUN apk upgrade --no-cache && \
+    apk add --no-cache \
       nginx \
       php84 \
       php84-ctype \
