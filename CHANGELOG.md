@@ -1,3 +1,9 @@
+## [v0.13.0-3] - 2026-11-17
+### :construction_worker: Build System
+- [`10bb988`](https://github.com/visibilityspots/dockerfile-baikal/commit/10bb9881254cd043a829ff30e98402d667b8da2c) - rebuild for zlib 1.4-r0 (CVE-2026-4738) *(commit by [@visibilityspots](https://github.com/visibilityspots))*
+- [`3312758`](https://github.com/visibilityspots/dockerfile-baikal/commit/3312758151f735d7119800d522c720aca258820f) - trigger the v0.13.0-3 release build *(commit by [@visibilityspots](https://github.com/visibilityspots))*
+
+
 ## [v0.13.0-1] - 2026-11-14
 ### :bug: Bug Fixes
 - [`46764ee`](https://github.com/visibilityspots/dockerfile-baikal/commit/46764eeb2f93c75fc6e96295cc71c48e83ad2aac) - **image**: apk upgrade the runtime stage for Alpine security fixes *(commit by [@visibilityspots](https://github.com/visibilityspots))*
@@ -73,3 +79,4 @@
 [v0.12.1]: https://github.com/visibilityspots/dockerfile-baikal/compare/0.10.1...v0.12.1
 [v0.12.1-1]: https://github.com/visibilityspots/dockerfile-baikal/compare/v0.12.1...v0.12.1-1
 [v0.13.0-1]: https://github.com/visibilityspots/dockerfile-baikal/compare/v0.13.0...v0.13.0-1
+[v0.13.0-3]: https://github.com/visibilityspots/dockerfile-baikal/compare/v0.13.0-1...v0.13.0-3
